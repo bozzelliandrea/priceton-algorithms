@@ -21,7 +21,6 @@
       <systemPath>${project.basedir}/lib/algs4.jar</systemPath>
     </dependency>
 
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

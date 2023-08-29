@@ -1,8 +1,4 @@
-package github.algorithms.module_one;/* *****************************************************************************
- *  Name:              Ada Lovelace
- *  Coursera User ID:  123456
- *  Last modified:     October 16, 1842
- **************************************************************************** */
+package github.algorithms.module_one;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -22,8 +18,13 @@ public class RandomWord {
         int i = 0;
 
         while (!StdIn.isEmpty()) {
+            String w = StdIn.readString();
+
+            if(w.trim().isEmpty())
+                break;
+
             if (word == null || StdRandom.bernoulli((double) 1 / i))
-                word = StdIn.readString();
+                word = w;
 
             i++;
         }
