@@ -1,4 +1,4 @@
-package github.algorithms.module_one;
+package github.algorithms.hello_world;
 
 public class HelloWorld {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package github.algorithms.module_one;
+package github.algorithms.hello_world;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
