@@ -2,10 +2,15 @@ package github.algorithms.data_structure;
 
 import github.algorithms.stack_and_queue.LinkedQueue;
 import github.algorithms.stack_and_queue.Queue;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class LinkedQueueTest {
+class LinkedQueueTest {
 
     public static Queue<Integer> queue;
 
