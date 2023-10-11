@@ -5,8 +5,6 @@ import java.util.NoSuchElementException;
 
 public class ArrayStack<T> extends Resizable implements Stack<T> {
 
-    private static final int INITIAL_CAPACITY = 8;
-
     private T[] data;
     private int n;
 
@@ -56,7 +54,7 @@ public class ArrayStack<T> extends Resizable implements Stack<T> {
     }
 
     @Override
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     protected void resize(int capacity) {
         T[] copy = (T[]) new Object[capacity];
 
