@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 public class ArrayStack<T> extends Resizable implements Stack<T> {
 
-    private T[] data;
+    private transient T[] data;
     private int n;
 
     @SuppressWarnings("unchecked")
@@ -46,11 +46,6 @@ public class ArrayStack<T> extends Resizable implements Stack<T> {
     @Override
     public int size() {
         return n;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return n == 0;
     }
 
     @Override

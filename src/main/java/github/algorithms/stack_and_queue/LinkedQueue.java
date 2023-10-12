@@ -2,8 +2,8 @@ package github.algorithms.stack_and_queue;
 
 public class LinkedQueue<T> implements Queue<T> {
 
-    private Node<T> first;
-    private Node<T> last;
+    private transient Node<T> first;
+    private transient Node<T> last;
     int size;
 
     public LinkedQueue() {
@@ -16,13 +16,13 @@ public class LinkedQueue<T> implements Queue<T> {
     public void enqueue(T item) {
         Node<T> oldLast = last;
         Node<T> newLast = new Node<>(item);
-        size++;
 
         if (isEmpty())
             first = newLast;
         else
             oldLast.setNext(newLast);
 
+        size++;
         last = newLast;
     }
 
@@ -52,10 +52,5 @@ public class LinkedQueue<T> implements Queue<T> {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return first == null;
     }
 }

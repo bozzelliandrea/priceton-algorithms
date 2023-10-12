@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class LinkedStack<T extends Serializable> implements Stack<T> {
 
-    private Node<T> top;
+    private transient Node<T> top;
     private int size;
 
     public LinkedStack() {
@@ -43,11 +43,6 @@ public class LinkedStack<T extends Serializable> implements Stack<T> {
     @Override
     public int size() {
         return this.size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.size == 0;
     }
 
     @Override
