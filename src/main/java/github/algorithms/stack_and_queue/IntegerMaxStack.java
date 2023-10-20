@@ -5,14 +5,12 @@ import java.util.NoSuchElementException;
 
 public class IntegerMaxStack implements Stack<Integer> {
 
-    private Node<Integer> head;
+    private Node<Pair<Integer, Integer>> head;
     private int size;
-    private Integer max;
 
     public IntegerMaxStack() {
         head = null;
         size = 0;
-        max = Integer.MIN_VALUE;
     }
 
     @Override
@@ -25,13 +23,15 @@ public class IntegerMaxStack implements Stack<Integer> {
     public void push(Integer item) {
 
         if (head == null) {
-            head = new Node<>(item, null);
-            max = item;
+            head = new Node<>(Pair.of(item, item));
         } else {
-            if (max < item)
-                max = item;
+            final Pair<Integer, Integer> p = (Pair<Integer, Integer>) Pair.of(item);
+            if (head.getValue().second() < item)
+                p.second(item);
+            else
+                p.second(head.getValue().second());
 
-            Node<Integer> newNode = new Node<>(item);
+            Node<Pair<Integer, Integer>> newNode = new Node<>(p);
             newNode.setNext(head);
             head = newNode;
         }
@@ -39,18 +39,17 @@ public class IntegerMaxStack implements Stack<Integer> {
         size++;
     }
 
-    // O(n) caused by max calc function
+    // O(1)
     @Override
     public Integer pop() {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
 
         size--;
-        Integer curr = head.getValue();
+        Pair<Integer, Integer> curr = head.getValue();
         head = head.getNext();
-        _calculateMax();
 
-        return curr;
+        return curr.first();
     }
 
     @Override
@@ -58,27 +57,14 @@ public class IntegerMaxStack implements Stack<Integer> {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
 
-        return head.getValue();
+        return head.getValue().first();
     }
 
     public Integer max() {
-        return max;
-    }
-
-    private void _calculateMax() {
         if (isEmpty())
-            max = null;
-        else
-            max = Integer.MIN_VALUE;
+            throw new NoSuchElementException("Stack underflow");
 
-        Node<Integer> curr = head;
-
-        while (curr != null) {
-            if (curr.getValue() > max)
-                max = curr.getValue();
-
-            curr = curr.getNext();
-        }
+        return head.getValue().second();
     }
 
     @Override
