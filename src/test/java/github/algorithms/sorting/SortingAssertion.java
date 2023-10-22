@@ -18,4 +18,14 @@ public class SortingAssertion {
                 Arrays.toString(toBeSorted)
         );
     }
+
+    public static void assertSorted(Sorting sortingInt) {
+        Integer[] toBeSorted = {1, 3, 4, 52, 4, 25, 4, 35, 53, 3244, 6, 456, 7, 112};
+        sortingInt.sort(toBeSorted);
+
+        Assertions.assertEquals(
+                Arrays.toString(new Integer[]{1, 3, 4, 4, 4, 6, 7, 25, 35, 52, 53, 112, 456, 3244}),
+                Arrays.toString(toBeSorted)
+        );
+    }
 }

@@ -18,4 +18,16 @@ public class Selection {
         }
     }
 
+    public static <T extends Comparable<T>> void sort(T[] arr) {
+        int size = arr.length;
+
+        for (int i = 0; i < size; i++) {
+            int min = i;
+            for (int j = i + 1; j < size; j++) {
+                if (arr[j].compareTo(arr[min]) < 0)
+                    min = j;
+            }
+            Collection.swap(arr, min, i);
+        }
+    }
 }
