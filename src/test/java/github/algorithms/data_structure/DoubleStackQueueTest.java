@@ -42,7 +42,7 @@ public class DoubleStackQueueTest {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     void unloadQueue() {
         Assertions.assertFalse(queue.isEmpty());
         Assertions.assertEquals(3, queue.size());
