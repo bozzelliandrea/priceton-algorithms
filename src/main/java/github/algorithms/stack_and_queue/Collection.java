@@ -9,4 +9,16 @@ public interface Collection extends Serializable {
     default boolean isEmpty() {
         return this.size() == 0;
     }
+
+    static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+    static <T> void swap(T[] arr, int i, int j) {
+        T tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 }
