@@ -86,4 +86,24 @@ class ResizableArrayTest {
         Assertions.assertTrue(RESIZABLE_ARRAY.isEmpty());
         Assertions.assertEquals(0, RESIZABLE_ARRAY.size());
     }
+
+    @Test
+    void binarySearch_withTargetPresent_shouldReturnIndex() {
+        ResizableArray<Integer> rs = ResizableArray.fromArray(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+
+        Assertions.assertEquals(3, rs.binarySearch(4));
+
+        Assertions.assertEquals(11, rs.binarySearch(12));
+
+        Assertions.assertEquals(0, rs.binarySearch(1));
+
+        Assertions.assertEquals(8, rs.binarySearch(9));
+    }
+
+    @Test
+    void binarySearch_withTargetNotPresent_shouldReturnNegative() {
+        ResizableArray<Integer> rs = ResizableArray.fromArray(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+
+        Assertions.assertEquals(-1, rs.binarySearch(44));
+    }
 }
