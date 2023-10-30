@@ -3,7 +3,7 @@ package github.algorithms.sorting;
 import github.algorithms.stack_and_queue.Collection;
 
 @Sort
-public class Selection {
+public final class Selection {
 
     public static void sort(int[] arr) {
         int size = arr.length;
