@@ -23,4 +23,6 @@ public class MergeTest {
     void inPlaceMergeSort_withObjects_usingComparable() {
         SortingAssertion.assertSorted((Sorting) InPlaceMerge::sort);
     }
+
+    //todo: all sorting algorithms in decreasing order
 }
