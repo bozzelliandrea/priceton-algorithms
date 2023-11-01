@@ -1,14 +1,23 @@
 package github.algorithms.sorting;
 
-import java.util.Arrays;
-
+/**
+ * This merge sort version consist of "Mergesort: practical improvements" from Robert Sedgewick course.
+ * <p>practical improvements:</p>
+ * <ol>
+ * <li>Cutoff in a range of 7 items where mergeSort will be replaced by insertionSort for small size array</li>
+ * <li>Stop if the biggest item in the first half is smallest then the first item in the second half (already sorted)</li>
+ * <li>Eliminate the for loop copy of the aux array, by switching the role of the aux array (copy from original arr, to aux)</li>
+ * </ol>
+ */
 @Sort
 public class OptimizedMerge {
 
     private static final int CUTOFF = 5;
 
     public static void sort(int[] arr) {
-        sort(arr, new int[arr.length], 0, arr.length - 1);
+        int[] aux = new int[arr.length];
+
+        sort(arr, aux, 0, arr.length - 1);
     }
 
     private static void sort(int[] arr, int[] aux, int low, int high) {
@@ -44,15 +53,5 @@ public class OptimizedMerge {
         }
     }
 
-    public static void main(String[] args) {
-        int[] arr = new int[]{1, 6, 3, 5, 1, 19, 5, 22, 11, 13, 97, 77, 34, 85, 23, 56, 34, 54, 29, 28};
 
-        long start = System.nanoTime();
-        sort(arr);
-        long end = System.nanoTime();
-        System.out.println("Elapsed Time in milli seconds: " + (end - start));
-
-
-        System.out.println(Arrays.toString(arr));
-    }
 }
