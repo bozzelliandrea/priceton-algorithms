@@ -69,7 +69,7 @@ public class InPlaceMerge {
 
     public static void main(String[] args) {
 
-        int[] arr = new int[]{5, 6, 72, 234, 1, 3, 29, 489, 30, 4, 90, 5, 73, 45, 23, 0, -5, -80, 8293};
+        Integer[] arr = new Integer[]{5, 6, 72, 234, 1, 3, 29, 489, 30, 4, 90, 5, 73, 45, 23, 0, -5, -80, 8293};
 
         sort(arr);
 
@@ -82,14 +82,49 @@ public class InPlaceMerge {
      * @param arr input array to be sorted
      */
     public static void sort(Comparable[] arr) {
+        if (arr == null || arr.length == 0)
+            return;
 
+        sort(arr, 0, arr.length - 1);
     }
 
     private static void sort(Comparable[] arr, int low, int high) {
+        if (high <= low)
+            return;
 
+        int mid = low + (high - low) / 2;
+        sort(arr, low, mid);
+        sort(arr, mid + 1, high);
+
+        merge(arr, low, mid, high);
     }
 
-    private static void sort(Comparable[] arr, int low, int mid, int high) {
+    private static void merge(Comparable[] arr, int low, int mid, int high) {
+        if (arr[mid].compareTo(arr[mid + 1]) < 0)
+            return;
 
+        int low2 = mid + 1;
+
+        while (low <= mid && low2 <= high) {
+            if (arr[low].compareTo(arr[low2]) <= 0)
+                low++;
+            else {
+                // prepare index
+                Comparable val = arr[low2];
+                int low2_idx = low2;
+
+                // shift all element
+                while (low2_idx != low) {
+                    arr[low2_idx] = arr[low2_idx - 1];
+                    low2_idx--;
+                }
+                arr[low2_idx] = val;
+
+                // increment indexes
+                low++;
+                mid++;
+                low2++;
+            }
+        }
     }
 }
