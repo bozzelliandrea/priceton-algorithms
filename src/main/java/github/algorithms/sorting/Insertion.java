@@ -32,4 +32,12 @@ public final class Insertion {
                     Collection.swap(arr, j, j - 1);
                 else break;
     }
+
+    public static <T extends Comparable<T>> void sort(T[] arr, int low, int high) {
+        for (int i = low; i <= high; i++)
+            for (int j = i; j > 0; j--)
+                if (arr[j].compareTo(arr[j - 1]) < 0)
+                    Collection.swap(arr, j, j - 1);
+                else break;
+    }
 }

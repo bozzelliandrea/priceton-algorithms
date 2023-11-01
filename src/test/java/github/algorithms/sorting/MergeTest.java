@@ -15,22 +15,12 @@ public class MergeTest {
     }
 
     @Test
-    void optimizedMergeSort_withInt() {
-        SortingAssertion.assertSorted((SortingInt) OptimizedMerge::sort);
-    }
-
-    @Test
-    void optimizedMergeSort_withObjects_usingComparable() {
-        SortingAssertion.assertSorted((Sorting) OptimizedMerge::sort);
-    }
-
-    @Test
     void inPlaceMergeSort_withInt() {
-        SortingAssertion.assertSorted((SortingInt) OptimizedMerge::sort);
+        SortingAssertion.assertSorted((SortingInt) InPlaceMerge::sort);
     }
 
     @Test
     void inPlaceMergeSort_withObjects_usingComparable() {
-        SortingAssertion.assertSorted((Sorting) OptimizedMerge::sort);
+        SortingAssertion.assertSorted((Sorting) InPlaceMerge::sort);
     }
 }
