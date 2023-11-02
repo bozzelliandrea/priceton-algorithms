@@ -1,6 +1,6 @@
 package github.algorithms.stack_and_queue;
 
-class Node<T> {
+public class Node<T> {
 
     private T value;
     private Node<T> next;
