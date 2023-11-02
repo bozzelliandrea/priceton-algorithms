@@ -88,23 +88,68 @@ public class NutsAndBolt {
         return i;
     }
 
+    /**
+     * Classic quick sort single array
+     */
+    public static void quickSort(int[] arr, int low, int high) {
+        if (high <= low)
+            return;
+
+        int p = partition(arr, low, high);
+
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        int i = low;
+        int pivot = arr[high];
+
+        for (int j = low; j < high; j++)
+            if (arr[j] < pivot)
+                Collection.swap(arr, i++, j);
+
+        Collection.swap(arr, i, high);
+        return i;
+    }
+
+
     public static void main(String[] args) {
-        int[] nuts = {6, 2, 3, 4, 1, 5, 7};
-        int[] bolts = {4, 2, 3, 7, 6, 1, 5};
-
-        match(nuts, bolts);
-
-        System.out.println(Arrays.toString(nuts));
-        System.out.println(Arrays.toString(bolts));
-
+        long start1, end1;
 
         char[] nuts_c = {'d', 'b', 'c', 'e', 'a', 'f'};
         char[] bolts_c = {'f', 'c', 'b', 'd', 'a', 'e'};
 
+        start1 = System.nanoTime();
         match(nuts_c, bolts_c);
+        end1 = System.nanoTime();
+        System.out.println("Elapsed Time in nano seconds: " + (end1 - start1));
 
         System.out.println(Arrays.toString(nuts_c));
         System.out.println(Arrays.toString(bolts_c));
+
+        int[] nuts = {6, 2, 3, 4, 1, 5, 7};
+        int[] bolts = {4, 2, 3, 7, 6, 1, 5};
+
+        start1 = System.nanoTime();
+        match(nuts, bolts);
+        end1 = System.nanoTime();
+        System.out.println("Elapsed Time in nano seconds: " + (end1 - start1));
+
+        System.out.println(Arrays.toString(nuts));
+        System.out.println(Arrays.toString(bolts));
+
+        nuts = new int[]{6, 2, 3, 4, 1, 5, 7};
+        bolts = new int[]{4, 2, 3, 7, 6, 1, 5};
+
+        start1 = System.nanoTime();
+        quickSort(nuts, 0, nuts.length - 1);
+        quickSort(bolts, 0, nuts.length - 1);
+        end1 = System.nanoTime();
+        System.out.println("Elapsed Time in nano seconds: " + (end1 - start1));
+
+        System.out.println(Arrays.toString(nuts));
+        System.out.println(Arrays.toString(bolts));
     }
 
 }
