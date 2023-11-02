@@ -21,4 +21,10 @@ public interface Collection extends Serializable {
         arr[i] = arr[j];
         arr[j] = tmp;
     }
+
+    static void swap(char[] arr, int i, int j) {
+        char tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 }
