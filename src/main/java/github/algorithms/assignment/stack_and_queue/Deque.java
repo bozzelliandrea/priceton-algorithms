@@ -130,21 +130,33 @@ public class Deque<T> implements Iterable<T> {
         System.out.println(deque.removeLast());
 
         System.out.println(deque);
+
+        System.out.println("Print iterator");
+        Iterator<Integer> iterator = deque.iterator();
+        while (iterator.hasNext())
+            System.out.println("Value: " + iterator.next());
+
+        // for (Integer integer : deque) System.out.println("Value: " + integer);
+
     }
 
     private class DequeIterator implements Iterator<T> {
 
+        DoubleNode<T> head = first;
+
         @Override
         public boolean hasNext() {
-            return false;
+            return head != null;
         }
 
         @Override
         public T next() {
-            if (isEmpty())
+            if (!hasNext())
                 throw new NoSuchElementException("Empty deque!");
 
-            return null;
+            T item = head.getValue();
+            head = head.getNext();
+            return item;
         }
 
         @Override
