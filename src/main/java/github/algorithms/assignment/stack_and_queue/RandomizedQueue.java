@@ -22,6 +22,12 @@ public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<
         random = new Random();
     }
 
+    public RandomizedQueue(int capacity) {
+        size = 0;
+        data = (T[]) new Object[capacity];
+        random = new Random();
+    }
+
     @Override
     public int size() {
         return size;
