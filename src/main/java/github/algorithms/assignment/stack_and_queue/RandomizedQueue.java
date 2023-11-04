@@ -30,13 +30,13 @@ public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<
     // add element at the end and then swap with a random element in range 0 to size - 1
     @Override
     public void enqueue(T item) {
-        if (size == data.length)
-            resize(data.length * 2);
-
         data[size] = item;
         if (size > 0)
             Collection.swap(data, random.nextInt(size), size);
         size++;
+
+        if (size == data.length)
+            resize(data.length * 2);
     }
 
     // last element (LIFO like) on the array (avoid shuffle)
@@ -45,11 +45,11 @@ public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<
         if (isEmpty())
             throw new NoSuchElementException("Empty deque!");
 
-        if (size > 0 && size == (data.length / 4))
-            resize(data.length / 2);
-
         T val = data[--size];
         data[size] = null;
+
+        if (size > 0 && size == (data.length / 4))
+            resize(data.length / 2);
 
         return val;
     }
@@ -70,14 +70,38 @@ public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new RandomizedQueueIterator(data, size);
+    }
+
+    private class RandomizedQueueIterator implements Iterator<T> {
+
+        private final T[] arr;
+        private int i;
+
+        public RandomizedQueueIterator(T[] arr, int size) {
+            this.arr = arr;
+            this.i = size;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return i > 0;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext())
+                return arr[--i];
+            else
+                throw new NoSuchElementException("Empty deque iterator!");
+        }
     }
 
     @Override
     protected void resize(int capacity) {
         T[] objs = (T[]) new Object[capacity];
 
-        for (int i = 0; i < capacity; i++) {
+        for (int i = 0; i < size; i++) {
             objs[i] = data[i];
             data[i] = null;
         }
@@ -97,5 +121,16 @@ public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
         System.out.println(queue.dequeue());
+
+        System.out.println("Iterator mode");
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        queue.enqueue(4);
+
+        for (Integer integer : queue)
+            System.out.println(integer);
+
     }
 }
