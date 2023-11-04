@@ -8,6 +8,12 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+/**
+ * A randomized queue is similar to a stack or queue, except that the item removed is chosen uniformly at random among items in the data structure.
+ * Create a generic data type RandomizedQueue that implements the following API:
+ *
+ * @param <T>
+ */
 @SuppressWarnings("unchecked")
 public class RandomizedQueue<T> extends Resizable implements Queue<T>, Iterable<T> {
 
