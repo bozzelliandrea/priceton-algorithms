@@ -63,7 +63,6 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
         if (isEmpty())
             throw new NoSuchElementException("Symbol Table is Empty!");
 
-
         Node<Pair<K, V>> head = data;
 
         if (size == 1)
@@ -71,7 +70,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
                 data = null;
                 size = 0;
                 return;
-            } else throw new NoSuchElementException("Key not found!");
+            } else throw new NoSuchElementException("Key " + key + " not found");
 
         if (head.getValue().first().equals(key)) {
             data = data.getNext();
@@ -90,7 +89,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
             head = head.getNext();
         }
 
-        throw new NoSuchElementException("Key not found!");
+        throw new NoSuchElementException("Key " + key + " not found");
     }
 
     @Override
@@ -111,30 +110,5 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
     @Override
     public int size() {
         return this.size;
-    }
-
-    public static void main(String[] args) {
-        SymbolTable<Integer, String> st = new LinkedListST<>();
-
-        st.put(1, "a");
-        st.put(2, "b");
-
-        System.out.println(st.get(1));
-
-        st.put(1, "c");
-
-        System.out.println(st.get(1));
-
-        st.delete(2);
-
-        System.out.println(st.contains(1));
-
-        System.out.println(st.size());
-
-        st.delete(1);
-
-        System.out.println(st.size());
-
-        System.out.println(st.contains(3));
     }
 }
