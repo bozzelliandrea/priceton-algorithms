@@ -1,5 +1,7 @@
 package github.algorithms.stack_and_queue;
 
+import github.algorithms.commons.Node;
+
 public class LinkedQueue<T> implements Queue<T> {
 
     private transient Node<T> first;

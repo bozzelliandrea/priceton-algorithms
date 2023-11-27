@@ -1,5 +1,8 @@
 package github.algorithms.stack_and_queue;
 
+import github.algorithms.commons.Node;
+import github.algorithms.commons.Pair;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

@@ -1,5 +1,7 @@
 package github.algorithms.stack_and_queue;
 
+import github.algorithms.commons.Node;
+
 import java.io.Serializable;
 import java.util.Iterator;
 

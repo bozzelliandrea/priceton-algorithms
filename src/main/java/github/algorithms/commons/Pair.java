@@ -1,4 +1,4 @@
-package github.algorithms.stack_and_queue;
+package github.algorithms.commons;
 
 public class Pair<F, S> {
 
