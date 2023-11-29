@@ -1,15 +1,11 @@
 package github.algorithms.symbol_table;
 
-import java.util.NoSuchElementException;
-
 public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable<K, V> {
 
     private BSTNode<K, V> bst;
-    private int size;
 
     public BinarySearchTree() {
         this.bst = null;
-        this.size = 0;
     }
 
     @Override
@@ -18,7 +14,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
             throw INVALID_NULL_KEY;
 
         if (isEmpty())
-            throw new NoSuchElementException("Symbol Table is Empty!");
+            throw EMPTY;
 
         BSTNode<K, V> node = bst;
 
@@ -41,13 +37,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
             throw INVALID_NULL_KEY;
 
         bst = put(bst, key, value);
-        size++;
     }
 
     private BSTNode<K, V> put(BSTNode<K, V> root, K key, V val) {
 
         if (root == null)
-            return new BSTNode<>(key, val);
+            return new BSTNode<>(key, val, 1);
 
         int cmp = key.compareTo(root.key);
 
@@ -58,11 +53,12 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         else
             root.value = val;
 
+        root.count = 1 + size(root.left) + size(root.right);
         return root;
     }
 
     public static void main(String[] args) {
-        SymbolTable<Integer, String> bst = new BinarySearchTree<>();
+        BinarySearchTree<Integer, String> bst = new BinarySearchTree<>();
 
         bst.put(1, "lal");
         bst.put(3, "sus");
@@ -70,7 +66,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         bst.put(2, "esghere");
         bst.put(5, "faf");
 
-        System.out.println(bst.get(8));
+        System.out.println("Min:" + bst.min());
+        System.out.println("Max:" + bst.max());
+        System.out.println("Size:" + bst.size());
     }
 
     @Override
@@ -85,17 +83,57 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
 
     @Override
     public int size() {
-        return this.size;
+        return size(bst);
+    }
+
+    private int size(BSTNode<K, V> node) {
+        return node == null ? 0 : node.count;
+    }
+
+    public K min() {
+        if (isEmpty())
+            throw EMPTY;
+
+        BSTNode<K, V> curr = bst;
+        K min = null;
+
+        while (curr != null) {
+            min = curr.key;
+            curr = curr.left;
+        }
+
+        return min;
+    }
+
+    public K max() {
+        if (isEmpty())
+            throw EMPTY;
+
+        BSTNode<K, V> curr = bst;
+        K max = null;
+
+        while (curr != null) {
+            max = curr.key;
+            curr = curr.right;
+        }
+
+        return max;
     }
 
     private static class BSTNode<K, V> {
         K key;
         V value;
         BSTNode<K, V> left, right;
+        int count;
 
         public BSTNode(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        public BSTNode(K key, V value, int count) {
+            this(key, value);
+            this.count = count;
         }
     }
 }
