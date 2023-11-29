@@ -17,6 +17,9 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
 
     @Override
     public V get(K key) {
+        if (key == null)
+            throw INVALID_NULL_KEY;
+
         if (isEmpty())
             throw new NoSuchElementException("Symbol Table is Empty!");
 
@@ -35,7 +38,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
     @Override
     public void put(K key, V value) {
         if (key == null)
-            throw new IllegalArgumentException("Null key value is invalid!");
+            throw INVALID_NULL_KEY;
 
         if (data == null) {
             data = new Node<>(Pair.of(key, value));
