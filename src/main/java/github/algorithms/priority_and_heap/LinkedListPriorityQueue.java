@@ -3,6 +3,8 @@ package github.algorithms.priority_and_heap;
 import github.algorithms.commons.Node;
 import github.algorithms.stack_and_queue.Queue;
 
+import java.util.Iterator;
+
 public class LinkedListPriorityQueue<T> implements Queue<T> {
 
     private Node<T> first;
@@ -32,6 +34,11 @@ public class LinkedListPriorityQueue<T> implements Queue<T> {
 
     @Override
     public T peek() {
+        return null;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
         return null;
     }
 }

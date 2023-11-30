@@ -4,6 +4,7 @@ import github.algorithms.commons.Node;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedStack<T extends Serializable> implements Stack<T> {
 
@@ -67,6 +68,7 @@ public class LinkedStack<T extends Serializable> implements Stack<T> {
 
         @Override
         public T next() {
+            if (!hasNext()) throw new NoSuchElementException();
             final T v = top.getValue();
             top = top.getNext();
             return v;

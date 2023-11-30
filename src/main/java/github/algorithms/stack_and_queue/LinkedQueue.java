@@ -2,6 +2,9 @@ package github.algorithms.stack_and_queue;
 
 import github.algorithms.commons.Node;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedQueue<T> implements Queue<T> {
 
     private transient Node<T> first;
@@ -14,20 +17,37 @@ public class LinkedQueue<T> implements Queue<T> {
         size = 0;
     }
 
+    public static void main(String[] args) {
+        LinkedQueue<Integer> queue = new LinkedQueue<>();
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
+        System.out.println(queue.dequeue());
+    }
+
     @Override
     public void enqueue(T item) {
         Node<T> oldLast = last;
-        Node<T> newLast = new Node<>(item);
+        last = new Node<>(item);
 
         if (isEmpty())
-            first = newLast;
+            first = last;
         else
-            oldLast.setNext(newLast);
+            oldLast.setNext(last);
 
         size++;
-        last = newLast;
     }
 
+    /**
+     * Removes and returns the item on this queue that was least recently added.
+     *
+     * @return the item on this queue that was least recently added
+     * @throws NoSuchElementException if this queue is empty
+     */
     @Override
     public T dequeue() {
         if (isEmpty())
@@ -54,5 +74,32 @@ public class LinkedQueue<T> implements Queue<T> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedQueueIterator(first);
+    }
+
+    private class LinkedQueueIterator implements Iterator<T> {
+
+        private Node<T> head;
+
+        LinkedQueueIterator(Node<T> node) {
+            this.head = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.head != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            final T val = this.head.getValue();
+            this.head = this.head.getNext();
+            return val;
+        }
     }
 }

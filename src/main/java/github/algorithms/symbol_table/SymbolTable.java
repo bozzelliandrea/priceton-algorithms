@@ -9,6 +9,10 @@ public interface SymbolTable<K, V> extends Serializable {
 
     RuntimeException EMPTY = new NoSuchElementException("Symbol Table is Empty!");
 
+    static <K> RuntimeException KEY_NOT_FOUND(K key) {
+        return new NoSuchElementException("Key " + key + " not found");
+    }
+
     V get(K key);
 
     void put(K key, V value);
@@ -23,4 +27,5 @@ public interface SymbolTable<K, V> extends Serializable {
         return this.size() == 0;
     }
 
+    Iterable<K> keys();
 }

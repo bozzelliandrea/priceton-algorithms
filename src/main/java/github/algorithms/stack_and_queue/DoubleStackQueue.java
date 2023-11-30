@@ -2,6 +2,7 @@ package github.algorithms.stack_and_queue;
 
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 //double stack based queue
@@ -62,5 +63,10 @@ public class DoubleStackQueue<T extends Serializable> implements Queue<T> {
         if (!inbox.isEmpty() && outbox.isEmpty())
             while (!inbox.isEmpty())
                 outbox.push(inbox.pop());
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

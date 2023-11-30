@@ -1,5 +1,11 @@
 package github.algorithms.symbol_table;
 
+import github.algorithms.stack_and_queue.LinkedQueue;
+import github.algorithms.stack_and_queue.Queue;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable<K, V> {
 
     private BSTNode<K, V> bst;
@@ -69,6 +75,22 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         System.out.println("Min:" + bst.min());
         System.out.println("Max:" + bst.max());
         System.out.println("Size:" + bst.size());
+
+        System.out.println(bst.contains(8));
+        System.out.println(bst.contains(88));
+
+        System.out.println(bst.rank(3));
+
+
+        System.out.println("++++++++++++++++++++");
+        for (Integer k : bst.levelOrderTraversal()) System.out.println(k);
+
+        System.out.println("++++++++++++++++++++");
+        for (Integer k : bst.keys()) System.out.println(k);
+
+        System.out.println(bst.contains(8));
+
+
     }
 
     @Override
@@ -78,6 +100,21 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
 
     @Override
     public boolean contains(K key) {
+        if (isEmpty())
+            return false;
+
+        BSTNode<K, V> root = bst;
+
+        while (root != null) {
+            int cmp = key.compareTo(root.key);
+            if (cmp < 0)
+                root = root.left;
+            else if (cmp > 0)
+                root = root.right;
+            else
+                return true;
+        }
+
         return false;
     }
 
@@ -88,6 +125,49 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
 
     private int size(BSTNode<K, V> node) {
         return node == null ? 0 : node.count;
+    }
+
+    @Override
+    public Iterable<K> keys() {
+        Queue<K> queue = new LinkedQueue<>();
+        inorderTraversal(bst, queue);
+        return queue;
+    }
+
+    private void inorderTraversal(BSTNode<K, V> node, Queue<K> queue) {
+        if (node == null)
+            return;
+
+        inorderTraversal(node.left, queue);
+        queue.enqueue(node.key);
+        inorderTraversal(node.right, queue);
+    }
+
+    /**
+     * Level order traversal (BFS)
+     *
+     * @return {@link Iterable} with all keys in order level
+     */
+    public Iterable<K> levelOrderTraversal() {
+        if (isEmpty())
+            return new LinkedList<>();
+
+        Queue<BSTNode<K, V>> queue = new LinkedQueue<>();
+        List<K> list = new LinkedList<>();
+
+        queue.enqueue(bst);
+        while (!queue.isEmpty()) {
+            BSTNode<K, V> node = queue.dequeue();
+
+            list.add(node.key);
+
+            if (node.left != null)
+                queue.enqueue(node.left);
+            if (node.right != null)
+                queue.enqueue(node.right);
+        }
+
+        return list;
     }
 
     public K min() {
@@ -118,6 +198,30 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         }
 
         return max;
+    }
+
+    /**
+     * count how many keys in the bst are less than input key
+     *
+     * @param key to rank
+     * @return count of node.key < key
+     */
+    public int rank(K key) {
+        return rank(bst, key);
+    }
+
+    private int rank(BSTNode<K, V> root, K key) {
+        if (root == null)
+            return 0;
+
+        int cmp = key.compareTo(root.key);
+
+        if (cmp < 0)
+            return rank(root.left, key);
+        else if (cmp > 0)
+            return 1 + size(root.left) + rank(root.right, key);
+        else
+            return size(root.left);
     }
 
     private static class BSTNode<K, V> {

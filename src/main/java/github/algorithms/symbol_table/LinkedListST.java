@@ -2,8 +2,12 @@ package github.algorithms.symbol_table;
 
 import github.algorithms.commons.Node;
 import github.algorithms.commons.Pair;
+import github.algorithms.stack_and_queue.LinkedQueue;
+import github.algorithms.stack_and_queue.LinkedStack;
+import github.algorithms.stack_and_queue.Queue;
+import github.algorithms.stack_and_queue.Stack;
 
-import java.util.NoSuchElementException;
+import static github.algorithms.symbol_table.SymbolTable.KEY_NOT_FOUND;
 
 public class LinkedListST<K, V> implements SymbolTable<K, V> {
 
@@ -21,7 +25,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
             throw INVALID_NULL_KEY;
 
         if (isEmpty())
-            throw new NoSuchElementException("Symbol Table is Empty!");
+            throw EMPTY;
 
         Node<Pair<K, V>> head = data;
 
@@ -32,7 +36,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
             head = head.getNext();
         }
 
-        throw new NoSuchElementException("Key " + key + " not found");
+        throw KEY_NOT_FOUND(key);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
     @Override
     public void delete(K key) {
         if (isEmpty())
-            throw new NoSuchElementException("Symbol Table is Empty!");
+            throw EMPTY;
 
         Node<Pair<K, V>> head = data;
 
@@ -73,7 +77,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
                 data = null;
                 size = 0;
                 return;
-            } else throw new NoSuchElementException("Key " + key + " not found");
+            } else throw KEY_NOT_FOUND(key);
 
         if (head.getValue().first().equals(key)) {
             data = data.getNext();
@@ -92,7 +96,7 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
             head = head.getNext();
         }
 
-        throw new NoSuchElementException("Key " + key + " not found");
+        throw KEY_NOT_FOUND(key);
     }
 
     @Override
@@ -113,5 +117,61 @@ public class LinkedListST<K, V> implements SymbolTable<K, V> {
     @Override
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public Iterable<K> keys() {
+        final Queue<K> queue = new LinkedQueue<>();
+        Node<Pair<K, V>> head = data;
+
+        while (head != null) {
+            queue.enqueue(head.getValue().first());
+            head = head.getNext();
+        }
+
+        return queue;
+    }
+
+    public static void main(String[] args) {
+        SymbolTable<Integer, String> bst = new LinkedListST<>();
+
+        bst.put(1, "lal");
+        bst.put(3, "sus");
+        bst.put(8, "sooos");
+        bst.put(2, "esghere");
+        bst.put(5, "faf");
+
+        for (Integer i : bst.keys()) {
+            System.out.println(i);
+        }
+
+        System.out.println("++++++++++++++++++++");
+
+        Stack<Integer> stack = new LinkedStack<>();
+
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+
+
+        for (Integer i : stack) {
+            System.out.println(i);
+        }
+
+
+        Queue<Integer> q = new LinkedQueue<>();
+        System.out.println("++++++++++++++++++++");
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        q.enqueue(4);
+
+
+        System.out.println(q.dequeue());
+
+        for (Integer i : q) {
+            System.out.println(i);
+        }
     }
 }

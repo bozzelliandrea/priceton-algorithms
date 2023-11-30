@@ -1,5 +1,6 @@
 package github.algorithms.data_structure;
 
+import github.algorithms.symbol_table.BinarySearchTree;
 import github.algorithms.symbol_table.LinkedListST;
 import github.algorithms.symbol_table.SymbolTable;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +13,13 @@ public class SymbolTableTest {
     @Test
     void linkedList_st_successTest() {
         final SymbolTable<Integer, String> st = new LinkedListST<>();
+        symbolTable_apiAssertions(st);
+        symbolTable_exceptionAssertions(st);
+    }
+
+    @Test
+    void binarySearchTree_st_successTest() {
+        final SymbolTable<Integer, String> st = new BinarySearchTree<>();
         symbolTable_apiAssertions(st);
         symbolTable_exceptionAssertions(st);
     }
@@ -50,30 +58,30 @@ public class SymbolTableTest {
     private void symbolTable_exceptionAssertions(SymbolTable<Integer, String> st) {
         RuntimeException exception = Assertions.assertThrows(NoSuchElementException.class, () -> st.get(20));
 
-        Assertions.assertEquals("Symbol Table is Empty!", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.EMPTY.getMessage(), exception.getMessage());
 
         exception = Assertions.assertThrows(NoSuchElementException.class, () -> st.delete(20));
 
-        Assertions.assertEquals("Symbol Table is Empty!", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.EMPTY.getMessage(), exception.getMessage());
 
         st.put(1, "a");
 
         exception = Assertions.assertThrows(NoSuchElementException.class, () -> st.get(20));
 
-        Assertions.assertEquals("Key 20 not found", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.KEY_NOT_FOUND(20).getMessage(), exception.getMessage());
 
         exception = Assertions.assertThrows(NoSuchElementException.class, () -> st.delete(20));
 
-        Assertions.assertEquals("Key 20 not found", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.KEY_NOT_FOUND(20).getMessage(), exception.getMessage());
 
         st.put(2, "a");
 
         exception = Assertions.assertThrows(NoSuchElementException.class, () -> st.delete(20));
 
-        Assertions.assertEquals("Key 20 not found", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.KEY_NOT_FOUND(20).getMessage(), exception.getMessage());
 
         exception = Assertions.assertThrows(IllegalArgumentException.class, () -> st.put(null, "a"));
 
-        Assertions.assertEquals("Null key value is invalid!", exception.getMessage());
+        Assertions.assertEquals(SymbolTable.INVALID_NULL_KEY.getMessage(), exception.getMessage());
     }
 }

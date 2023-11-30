@@ -1,6 +1,7 @@
 package github.algorithms.stack_and_queue;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ArrayQueue<T> extends Resizable implements Queue<T> {
@@ -75,5 +76,10 @@ public class ArrayQueue<T> extends Resizable implements Queue<T> {
     @Override
     public String toString() {
         return Arrays.toString(data);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }
