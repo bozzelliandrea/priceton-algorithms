@@ -99,6 +99,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
 
         System.out.println("++++++++++ POST ORDER ++++++++++");
         for (Integer k : bst.postOrderTraversal()) System.out.println(k);
+        System.out.println(bst.size());
 
         bst.delete(8);
 
@@ -110,7 +111,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
     @Override
     public void delete(K key) {
         if (key == null)
-            throw new IllegalArgumentException("Key is null");
+            throw INVALID_NULL_KEY;
 
         bst = delete(bst, key);
     }
