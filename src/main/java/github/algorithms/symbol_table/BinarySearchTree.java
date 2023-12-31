@@ -90,13 +90,70 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
 
         System.out.println(bst.contains(8));
 
+        System.out.println("+++++++++ PRE ORDER +++++++++++");
+        for (Integer k : bst.preOrderTraversal()) System.out.println(k);
+
+        System.out.println("++++++++++ IN ORDER ++++++++++");
+        for (Integer k : bst.inorderTraversal()) System.out.println(k);
+
+
+        System.out.println("++++++++++ POST ORDER ++++++++++");
+        for (Integer k : bst.postOrderTraversal()) System.out.println(k);
+
+        bst.delete(8);
+
+        System.out.println(bst.contains(8));
+        System.out.println(bst.size());
 
     }
 
     @Override
     public void delete(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("Key is null");
 
+        bst = delete(bst, key);
     }
+
+    private BSTNode<K, V> delete(BSTNode<K, V> node, K key) {
+        if (node == null)
+            return null;
+
+        int cmp = key.compareTo(node.key);
+        if (cmp > 0)
+            node.right = delete(node.right, key);
+        else if (cmp < 0)
+            node.left = delete(node.left, key);
+        else {
+            if (node.right == null)
+                return node.left;
+            if (node.left == null)
+                return node.right;
+
+            BSTNode<K, V> tmp = node;
+            node = min(tmp.right);
+            node.right = deleteMin(tmp.right);
+            node.left = tmp.left;
+        }
+
+        node.count = 1 + size(node.left) + size(node.right);
+        return node;
+    }
+
+    private BSTNode<K, V> deleteMin(BSTNode<K, V> node) {
+        if (node.left == null)
+            return node.right;
+
+        node.left = deleteMin(node.left);
+        node.count = 1 + node.left.count + node.right.count;
+        return node;
+    }
+
+    private BSTNode<K, V> min(BSTNode<K, V> x) {
+        if (x.left == null) return x;
+        else return min(x.left);
+    }
+
 
     @Override
     public boolean contains(K key) {
@@ -143,6 +200,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         inorderTraversal(node.right, queue);
     }
 
+    // BST TRAVERSAL METHODS
+
     /**
      * Level order traversal (BFS)
      *
@@ -168,6 +227,60 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
         }
 
         return list;
+    }
+
+    public Iterable<K> preOrderTraversal() {
+        if (isEmpty())
+            return new LinkedList<>();
+
+        List<K> list = new LinkedList<>();
+        preOrderDFS(bst, list);
+        return list;
+    }
+
+    private void preOrderDFS(BSTNode<K, V> bst, List<K> list) {
+        if (bst == null)
+            return;
+
+        list.add(bst.key);
+        this.inorderDFS(bst.left, list);
+        this.inorderDFS(bst.right, list);
+    }
+
+    public Iterable<K> inorderTraversal() {
+        if (isEmpty())
+            return new LinkedList<>();
+
+        List<K> list = new LinkedList<>();
+        inorderDFS(bst, list);
+        return list;
+    }
+
+    private void inorderDFS(BSTNode<K, V> bst, List<K> list) {
+        if (bst == null)
+            return;
+
+        this.inorderDFS(bst.left, list);
+        list.add(bst.key);
+        this.inorderDFS(bst.right, list);
+    }
+
+    public Iterable<K> postOrderTraversal() {
+        if (isEmpty())
+            return new LinkedList<>();
+
+        List<K> list = new LinkedList<>();
+        postOrderDFS(bst, list);
+        return list;
+    }
+
+    private void postOrderDFS(BSTNode<K, V> bst, List<K> list) {
+        if (bst == null)
+            return;
+
+        this.inorderDFS(bst.left, list);
+        this.inorderDFS(bst.right, list);
+        list.add(bst.key);
     }
 
     public K min() {
@@ -224,7 +337,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements SymbolTable
             return size(root.left);
     }
 
-    private static class BSTNode<K, V> {
+    public static class BSTNode<K, V> {
         K key;
         V value;
         BSTNode<K, V> left, right;
